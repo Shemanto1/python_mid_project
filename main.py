@@ -4,6 +4,15 @@ from pygame.locals import *
 
 
 
+class Snake:
+   def __init__(self):
+        pass
+
+class Game:
+   def __init__(self):
+        pass
+   
+
 
 def draw_block():
     surface.fill((30, 30, 30))
