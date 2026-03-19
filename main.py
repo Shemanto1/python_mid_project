@@ -3,6 +3,8 @@ import sys
 from pygame.locals import *
 
 
+
+
 def draw_block():
     surface.fill((30, 30, 30))
     surface.blit(block,(block_x,block_y))
@@ -11,6 +13,8 @@ def draw_block():
 
 
 if __name__ == "__main__":
+ 
+
     pygame.init()
 
     surface = pygame.display.set_mode((1000,500))
