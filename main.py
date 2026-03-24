@@ -11,6 +11,8 @@ class Snake:
         self.block = pygame.image.load("resources/block.jpg").convert()
         self.x = 100 
         self.y = 100
+
+        self.direction ='down'
     
    def draw(self):
         self.parent_screen.fill((30, 30, 30))
@@ -18,18 +20,31 @@ class Snake:
         pygame.display.update()
 
    def move_up(self):
-       self.y -= 10
-       self.draw()
+       self.direction ='up'
 
    def move_down(self):
-       self.y += 10
-       self.draw()
+       self.direction ='down'
+       
    def move_left(self):
-       self.x -= 10
-       self.draw()
+       self.direction ='left'
+       
    def move_right(self):
-       self.x += 10
+       self.direction ='right'
+       
+    
+   def walk(self):
+       if self.direction =='up':
+           self.y -=10
+       if self.direction =='down':
+           self.y +=10
+       if self.direction =='right':
+           self.x +=10
+       if self.direction =='left':
+           self.x -=10
        self.draw()
+      
+       
+       
        
       
 
@@ -62,6 +77,9 @@ class Game:
             
             if event.type == pygame.QUIT:
                 running = False
+        
+         self.snake.walk()
+         time.sleep(0.2)
    
 
 
