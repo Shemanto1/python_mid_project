@@ -42,7 +42,7 @@ class Snake:
        
     
    def draw(self):
-        self.parent_screen.fill((30, 30, 30))
+        #self.parent_screen.fill((30, 30, 30))
         for i in range(self.length):
          self.parent_screen.blit(self.block,(self.x[i],self.y[i]))
         pygame.display.update()
@@ -89,14 +89,14 @@ class Game:
          pygame.mixer.init()
          self.surface.fill((30, 30, 30))
          self.background_music()
-         self.snake = Snake(self.surface,5)
+         self.snake = Snake(self.surface,2)
          self.snake.draw()
          self.apple =Apple(self.surface)
          self.apple.draw()
     
 
    def play(self):
-       
+    self.background_image()
     self.snake.walk()
     self.apple.draw()
     self.display_score()
@@ -114,6 +114,11 @@ class Game:
             sound=pygame.mixer.Sound("resources/crash.mp3")
             pygame.mixer.Sound.play(sound)
             raise "game over"
+    
+    if not (0 <= self.snake.x[0] <= 1000 and 0 <= self.snake.y[0] <= 800):
+            sound=pygame.mixer.Sound("resources/crash.mp3")
+            pygame.mixer.Sound.play(sound)
+            raise "Hit the boundry error"
           
 
 
@@ -131,21 +136,28 @@ class Game:
    
        
    def show_game_over(self):
-       self.surface.fill((255,200,255))
+       self.background_image()
        font = pygame.font.SysFont('arial',30)
        line1 =font.render(f"Game is over!!! your score is : {self.snake.length-2}",True,(0,200,200))
        self.surface.blit(line1,(200,300))
        line2 = font.render(f"To play again press Enter. To exit press Escape!",True,(0,0,0))
        self.surface.blit(line2,(200,350))
+       pygame.mixer.music.pause()
        pygame.display.update()
 
    def reset(self):
          self.snake = Snake(self.surface,2)
          self.apple =Apple(self.surface)
+     
     
    def background_music(self):
        pygame.mixer.music.load("resources/background.mp3") 
        pygame.mixer.music.play()
+
+
+   def background_image(self):
+       background = pygame.image.load("resources/background.jpg")
+       self.surface.blit(background,(0,0))
 
        
        
@@ -166,7 +178,10 @@ class Game:
                     if event.key == K_RIGHT:
                         self.snake.move_right()
                     if event.key == K_RETURN:
+                        self.background_music()
                         pause = False
+                    if event.key == K_ESCAPE:
+                        running = False
 
 
                 if event.type == pygame.QUIT:
