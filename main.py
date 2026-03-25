@@ -138,9 +138,9 @@ class Game:
    def show_game_over(self):
        self.background_image()
        font = pygame.font.SysFont('arial',30)
-       line1 =font.render(f"Game is over!!! your score is : {self.snake.length-2}",True,(0,200,200))
+       line1 =font.render(f"Game is over!!! your score is : {self.snake.length-2}",True,(255,200,200))
        self.surface.blit(line1,(200,300))
-       line2 = font.render(f"To play again press Enter. To exit press Escape!",True,(0,0,0))
+       line2 = font.render(f"To play again press Enter. To exit press Escape!",True,(255,255,255))
        self.surface.blit(line2,(200,350))
        pygame.mixer.music.pause()
        pygame.display.update()
@@ -170,13 +170,17 @@ class Game:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     if event.key == K_UP:
-                        self.snake.move_up()
+                        if self.snake.direction != 'down':
+                         self.snake.move_up()
                     if event.key == K_DOWN:
-                        self.snake.move_down()
+                        if self.snake.direction != 'up':
+                         self.snake.move_down()
                     if event.key == K_LEFT:
-                        self.snake.move_left()
+                        if self.snake.direction != 'right':
+                         self.snake.move_left()
                     if event.key == K_RIGHT:
-                        self.snake.move_right()
+                        if self.snake.direction != 'left':
+                         self.snake.move_right()
                     if event.key == K_RETURN:
                         self.background_music()
                         pause = False
