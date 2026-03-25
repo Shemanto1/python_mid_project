@@ -19,8 +19,8 @@ class Apple:
         pygame.display.update()
 
     def move(self):
-        self.a = random.randint(0,25)*size
-        self.b = random.randint(0,20)*size
+        self.a = random.randint(0,24)*size
+        self.b = random.randint(0,19)*size
 
     
 
@@ -34,6 +34,12 @@ class Snake:
        
 
         self.direction ='down'
+
+   def increse_length(self):
+       self.length += 1
+       self.x.append(-1)
+       self.y.append(-1)
+       
     
    def draw(self):
         self.parent_screen.fill((30, 30, 30))
@@ -81,7 +87,7 @@ class Game:
          pygame.init()
          self.surface = pygame.display.set_mode((1000,800))
          self.surface.fill((30, 30, 30))
-         self.snake = Snake(self.surface,6)
+         self.snake = Snake(self.surface,2)
          self.snake.draw()
          self.apple =Apple(self.surface)
          self.apple.draw()
@@ -91,15 +97,28 @@ class Game:
        
     self.snake.walk()
     self.apple.draw()
+    self.display_score()
+    pygame.display.update()
+
+
     if self.is_collision(self.snake.x[0],self.snake.y[0],self.apple.a,self.apple.b):
+        self.snake.increse_length()
         self.apple.move()
+    
 
 
    def is_collision(self,x1,y1,x2,y2):
-       if x1 >= x2 and x1 <= x2 +size:
-           if y1 >= y2 and y1 <= y2 +size:
+       if x1 >= x2 and x1 < x2 +size:
+           if y1 >= y2 and y1 < y2 +size:
                return True
        return False
+   
+   def display_score(self):
+       font = pygame.font.SysFont('arial',30)
+       score = font.render(f"score: {self.snake.length-2}",True,(200,200,200))
+       self.surface.blit(score,(800,10))
+   
+   
        
            
        
