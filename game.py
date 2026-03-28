@@ -1,13 +1,26 @@
 import pygame
 import time
 from pygame.locals import *
+<<<<<<< Updated upstream
+=======
+import json
+>>>>>>> Stashed changes
 
 from snake import Snake
 from apple import Apple
 
+<<<<<<< Updated upstream
 size = 40
 
 class Game:
+=======
+
+size = 40
+
+class Game:
+   
+   
+>>>>>>> Stashed changes
    def __init__(self):
          pygame.init()
          self.surface = pygame.display.set_mode((1000,800))
@@ -19,6 +32,13 @@ class Game:
          self.snake.draw()
          self.apple =Apple(self.surface)
          self.apple.draw()
+<<<<<<< Updated upstream
+=======
+         self.high_score = self.load_high_score()
+
+         self.speed = 0.3
+         self.min_speed = 0.05  
+>>>>>>> Stashed changes
     
 
    def play(self):
@@ -34,6 +54,12 @@ class Game:
         pygame.mixer.Sound.play(sound)
         self.snake.increse_length()
         self.apple.move()
+<<<<<<< Updated upstream
+=======
+        self.speed -= 0.02
+        if self.speed < self.min_speed:
+                self.speed = self.min_speed
+>>>>>>> Stashed changes
     
     for i in range(2,self.snake.length):
         if self.is_collision(self.snake.x[0],self.snake.y[0],self.snake.x[i],self.snake.y[i]):
@@ -45,6 +71,11 @@ class Game:
             sound=pygame.mixer.Sound("resources/crash.mp3")
             pygame.mixer.Sound.play(sound)
             raise "Hit the boundry error"
+<<<<<<< Updated upstream
+=======
+
+    
+>>>>>>> Stashed changes
           
 
 
@@ -55,9 +86,36 @@ class Game:
        return False
    
    def display_score(self):
+<<<<<<< Updated upstream
        font = pygame.font.SysFont('arial',30)
        score = font.render(f"score: {self.snake.length-2}",True,(200,200,200))
        self.surface.blit(score,(800,10))
+=======
+  
+    font = pygame.font.SysFont('arial', 30)
+
+    
+    current_score = self.snake.length - 2
+
+    
+    score_text = font.render(f"Score: {current_score}", True, (200, 200, 200))
+    high_score_text = font.render(f"High Score: {self.high_score}", True, (255, 255, 255))
+    
+    self.surface.blit(score_text, (800, 10))
+    self.surface.blit(high_score_text, (500, 10))
+
+   def load_high_score(self):
+      try:
+        with open("score.json", "r") as f:
+            data = json.load(f)
+            return data["high_score"]
+      except:
+        return 0
+
+   def save_high_score(self, score):
+        with open("score.json", "w") as f:
+            json.dump({"high_score": score}, f)
+>>>>>>> Stashed changes
    
    
        
@@ -123,6 +181,17 @@ class Game:
             except Exception as e:
                 self.show_game_over()
                 pause =True
+<<<<<<< Updated upstream
                 self.reset()
 
             time.sleep(.3)   
+=======
+                current_score = self.snake.length - 2
+
+                if current_score > self.high_score:
+                    self.high_score = current_score
+                    self.save_high_score(self.high_score)
+                self.reset()
+
+            time.sleep(self.speed)  
+>>>>>>> Stashed changes
