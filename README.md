@@ -11,5 +11,6 @@ Requirements
 
 Run the Game
 bash
+
 python main.py
 
